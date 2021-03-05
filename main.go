@@ -70,7 +70,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// If the message is "pong" reply with "Ping!"
 	case "pong":
 		s.ChannelMessageSend(m.ChannelID, "Ping!")
-	case "help":
+	case "help",  "!help":
 		s.ChannelMessageSend(m.ChannelID, "I understand the following commands:\nping\npong\nfortune\nweather")
 	case "fortune":
 		fortune, _ := exec.Command("fortune").Output()
