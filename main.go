@@ -22,7 +22,7 @@ func init() {
 
 	//flag.StringVar(&Token, "t", "", "Bot Token")
 	//flag.Parse()
-	file, err := os.Open("discord-bot.conf")
+	file, err := os.Open("/home/mkasun/discord-bot/discord-bot.conf")
 	if err != nil {
 		panic("could not read token file")
 	}

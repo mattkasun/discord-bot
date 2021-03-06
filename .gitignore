@@ -6,6 +6,8 @@
 *.dylib
 discord-bot
 discord-bot.conf
+.env
+*swp
 
 
 # Test binary, built with `go test -c`
