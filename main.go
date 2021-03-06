@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -11,21 +11,33 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-// Variables used for command line parameters
-var (
+// Configuration
+type Configuration struct {
 	Token string
-)
+}
+
+var configuration Configuration
 
 func init() {
 
-	flag.StringVar(&Token, "t", "", "Bot Token")
-	flag.Parse()
+	//flag.StringVar(&Token, "t", "", "Bot Token")
+	//flag.Parse()
+	file, err := os.Open("discord-bot.conf")
+	if err != nil {
+		panic("could not read token file")
+	}
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&configuration)
+	if err != nil {
+		panic("could not read token")
+	}
+
 }
 
 func main() {
 
 	// Create a new Discord session using the provided bot token.
-	dg, err := discordgo.New("Bot " + Token)
+	dg, err := discordgo.New("Bot " + configuration.Token)
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
@@ -70,7 +82,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// If the message is "pong" reply with "Ping!"
 	case "pong":
 		s.ChannelMessageSend(m.ChannelID, "Ping!")
-	case "help",  "!help":
+	case "help", "!help":
 		s.ChannelMessageSend(m.ChannelID, "I understand the following commands:\nping\npong\nfortune\nweather")
 	case "fortune":
 		fortune, _ := exec.Command("fortune").Output()

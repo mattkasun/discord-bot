@@ -5,6 +5,8 @@
 *.so
 *.dylib
 discord-bot
+discord-bot.conf
+
 
 # Test binary, built with `go test -c`
 *.test
