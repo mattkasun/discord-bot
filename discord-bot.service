@@ -1,0 +1,12 @@
+[Unit]
+Description=Discord Bot
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+User=mkasun
+ExecStart=/home/mkasun/discord-bot/discord-bot -t ODE2ODExNjA3MzkxNzMxNzIy.YEAZFg.s2RC2bpXTGWTbrafGdVKbAXPUkc
+
+[Install]
+WantedBy=multi-user.target
