@@ -85,7 +85,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	case "help", "!help":
 		s.ChannelMessageSend(m.ChannelID, "I understand the following commands:\nping\npong\nfortune\nweather")
 	case "fortune":
-		fortune, _ := exec.Command("fortune").Output()
+		fortune, _ := exec.Command("/usr/games/fortune").Output()
 		s.ChannelMessageSend(m.ChannelID, string(fortune))
 	case "weather":
 		ottWeather, _ := exec.Command("/usr/bin/curl", "wttr.in/ottawa?format=3").Output()
