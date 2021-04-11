@@ -8,6 +8,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - run : go build -o build/x86/discord-bot main
-            - run : env GOOS=linux GOARCH=arm GOARM=7 go build -o build/arm7/discord.bot main
-            - run : env GOOS=linux GOARCH=arm64 go build -o build/arm64/discord.bot main
+            - run : go build -o build/x86/discord-bot main.go
+            - run : env GOOS=linux GOARCH=arm GOARM=7 go build -o build/arm7/discord.bot main.go
+            - run : env GOOS=linux GOARCH=arm64 go build -o build/arm64/discord.bot main.go
