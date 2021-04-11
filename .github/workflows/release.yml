@@ -12,11 +12,23 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v2
+            - name: Create Tag
+              id: tag
+              uses: actions/github-script@v3
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      github.git.createRef({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          ref: "refs/tag/tagname",
+                          sha: context.sha
+                      })
             - name: Upload Release Asset
               uses: marvinpinto/action-automatic-releases@latest
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  automatice_release_tag: "latest"
+                  tag_name: ${{ steps.tag.outputs.result }}
                   prerelease: true
                   title: "Development Build"
                   files: build/*/*
