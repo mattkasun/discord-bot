@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 Restart=on-failure
 User=mkasun
-ExecStart=/home/mkasun/discord-bot/discord-bot -t ODE2ODExNjA3MzkxNzMxNzIy.YEAZFg.s2RC2bpXTGWTbrafGdVKbAXPUkc
+ExecStart=/home/mkasun/discord-bot/discord-bot 
 
 [Install]
 WantedBy=multi-user.target
