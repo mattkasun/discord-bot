@@ -18,6 +18,6 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  upload_url: "https://uploads.github.com/repos/mattkasun/discord-bot/releases/41246162/assets"
+                  upload_url: "https://uploads.github.com/repos/mattkasun/discord-bot/releases/41246162/assets?name=test"
                   asset_path: ./build/x86/discord-bot
                   asset_content_type: application/octet-stream
