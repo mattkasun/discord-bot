@@ -7,18 +7,16 @@ on:
 
 jobs:
     release:
-        name: Upload Assets
+        name: "Pre Release"
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v2
             - name: Upload Release Asset
-              id: upload-release-asset
-              uses: actions/upload-release-asset@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              uses: marvinpinto/action-automatic-releases@latest
               with:
-                  upload_url: "https://uploads.github.com/repos/mattkasun/discord-bot/releases/41246162/"
-                  asset_path: ./build/arm64/discord.bot
-                  asset_content_type: application/octet-stream
-                  asset_name: discord-bot
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  automatice_release_tag: "latest"
+                  prerelease: true
+                  title: "Development Build"
+                  files: build/*/*
