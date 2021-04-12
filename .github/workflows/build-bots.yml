@@ -1,0 +1,15 @@
+name: Build Bots
+
+on:
+ push:
+
+jobs:
+ build-bots:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v2
+   - name: build executables
+     run: |
+       env GOOS=linux GOARCH=amd64 go build -o build/x86/discord-bot main.go
+       env GOOS=linux GOARCH=arm GOARM=7 go build -o build/arm7/discord.bot main.go
+       env GOOS=linux GOARCH=arm64 go build -o build/arm64/discord.bot main.go
