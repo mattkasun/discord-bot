@@ -36,19 +36,42 @@ jobs:
           env GOOS=linux GOARCH=arm GOARM=7 go build -o build/arm7/discord-bot main.go
           env GOOS=linux GOARCH=arm64 go build -o build/arm64/discord-bot main.go
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: wireguard-go-${{ env.BOT_VERSION }}
-          path: build
+          #      - name: Upload Artifact
+          #uses: actions/upload-artifact@v2
+          #with:
+          #name: wireguard-go-${{ env.BOT_VERSION }}
+          #path: build
 
-      - name: Upload to Release
+      - name: Upload arm7 to Release
         if: github.event.inputs.version == ''
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/*
+          file: build/arm7/discord-bot
           tag: ${{ env.BOT_VERSION }}
           overwrite: true
-          file_glob: true
           prerelease: true
+          asset_name: discord-bot.arm7
+
+      - name: Upload arm64 to Release
+        if: github.event.inputs.version == ''
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/arm64/discord-bot
+          tag: ${{ env.BOT_VERSION }}
+          overwrite: true
+          prerelease: true
+          asset_name: discord-bot.arm64
+
+      - name: Upload x86 to Release
+        if: github.event.inputs.version == ''
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/x86/discord-bot
+          tag: ${{ env.BOT_VERSION }}
+          overwrite: true
+          prerelease: true
+          asset_name: discord-bot.x86
+
