@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'wireguard-go version'
+        description: 'discord-bot version'
         required: false
 
 jobs:
@@ -17,11 +17,11 @@ jobs:
       - name: Get Version Number
         run: |
           if [[ -n "${{ github.event.inputs.version }}" ]]; then
-            WGGO_VERSION=${{ github.event.inputs.version }}
+            BOT_VERSION=${{ github.event.inputs.version }}
           else
-            WGGO_VERSION=$(curl -fsSL https://api.github.com/repos/WireGuard/wireguard-go/tags | grep 'name' | head -1 | cut -d'"' -f4)
+            BOT_VERSION=$(curl -fsSL https://api.github.com/repos/mattkasun/discord-bot/tags | grep 'name' | head -1 | cut -d'"' -f4)
           fi
-          echo "WGGO_VERSION=${WGGO_VERSION}" >> $GITHUB_ENV
+          echo "BOT_VERSION=${BOT_VERSION}" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -31,12 +31,15 @@ jobs:
           go-version: 1.16
 
       - name: Build
-        run: ./build.sh
+        run: |
+          env GOOS=linux GOARCH=amd64 go build -o build/x86/discord-bot main.go
+          env GOOS=linux GOARCH=arm GOARM=7 go build -o build/arm7/discord-bot main.go
+          env GOOS=linux GOARCH=arm64 go build -o build/arm64/discord-bot main.go
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: wireguard-go-${{ env.WGGO_VERSION }}
+          name: wireguard-go-${{ env.BOT_VERSION }}
           path: build
 
       - name: Upload to Release
@@ -45,7 +48,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/*
-          tag: ${{ env.WGGO_VERSION }}
+          tag: ${{ env.BOT_VERSION }}
           overwrite: true
           file_glob: true
           prerelease: true
