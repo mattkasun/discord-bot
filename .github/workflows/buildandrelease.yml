@@ -7,6 +7,8 @@ on:
       version:
         description: 'discord-bot version'
         required: false
+  release:
+    types: [created]
 
 jobs:
   build:
